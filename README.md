@@ -1,3 +1,12 @@
+```bash
+Product Mangement APIs
+```
+
+Prerequisite
+
+Create a .env file in the root directory and copy everything from .env.example file and paste it inside .env file.
+Replace the values with your desired values in the .env file.
+
 ## Quick Start
 
 To run a project, simply run:
@@ -39,23 +48,6 @@ npm run test:watch
 
 # run test coverage
 npm run coverage
-```
-
-
-Linting:
-
-```bash
-# run ESLint
-npm run lint
-
-# fix ESLint errors
-npm run lint:fix
-
-# run prettier
-npm run prettier
-
-# fix prettier errors
-npm run prettier:fix
 ```
 
 ## Environment Variables

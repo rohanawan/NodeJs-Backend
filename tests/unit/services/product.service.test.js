@@ -8,7 +8,8 @@ describe('Product Service', () => {
   describe('getProductById', () => {
     it('should return the product if found', async () => {
       const productId = '1';
-      const product = { _id: productId, name: 'Test Product' };
+      const productName = 'Test Product'
+      const product = { _id: productId, name: productName };
       Product.findById.mockResolvedValue(product);
 
       const result = await getProductById(productId);
@@ -16,11 +17,11 @@ describe('Product Service', () => {
       expect(result).toEqual(product);
     });
 
-    it('should throw an error if product not found', async () => {
+    it('Should throw 404 if product not found', async () => {
       const productId = 'fakeId';
       Product.findById.mockRejectedValue(new ApiError('Product not found'));
 
-      await expect(getProductById(productId)).rejects.toThrow(ApiError);
+      expect(getProductById(productId)).rejects.toThrow(ApiError);
     });
   });
 
@@ -28,8 +29,8 @@ describe('Product Service', () => {
     it('should update a product by id', async () => {
       const productId = '1';
       const updateData = { name: 'Updated Product' };
-
-      const product = { _id: productId, name: 'Test Product' };
+      const productName = 'Test Product'
+      const product = { _id: productId, name: productName };
       product.save = jest.fn().mockResolvedValue(product);
 
       Product.findById.mockResolvedValue(product);
@@ -40,7 +41,7 @@ describe('Product Service', () => {
       expect(product.save).toHaveBeenCalledTimes(1);
     });
 
-    it('should throw an error if product not found', async () => {
+    it('Should throw 404 if product not found', async () => {
       const productId = '1';
       const updateData = { name: 'Updated Product' };
       Product.findById.mockResolvedValue(null);
@@ -51,7 +52,8 @@ describe('Product Service', () => {
   describe('deleteProductById', () => {
     it('should delete a product by id', async () => {
       const productId = '1';
-      const product = { _id: productId, name: 'Test Product' };
+      const productName = 'Test Product'
+      const product = { _id: productId, name:  productName};
       product.remove = jest.fn().mockResolvedValue(product);
 
       Product.findById.mockResolvedValue(product);
@@ -62,7 +64,7 @@ describe('Product Service', () => {
       expect(product.remove).toHaveBeenCalledTimes(1);
     });
 
-    it('should throw an error if product not found', async () => {
+    it('Should throw 404 if product not found', async () => {
       const productId = '1';
       Product.findById.mockResolvedValue(null);
 

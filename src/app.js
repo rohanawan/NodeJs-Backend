@@ -54,6 +54,7 @@ if (config.env === 'production') {
 // v1 api routes
 app.use('/', routes);
 
+// server static file for access
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // checking the server's health
