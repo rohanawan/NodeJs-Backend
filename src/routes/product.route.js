@@ -8,11 +8,6 @@ const {
   productController: { createProduct, getProducts, getProduct, updateProduct, deleteProduct },
 } = require('../controllers');
 
-const { uploadFileMiddleware, uploadBulkMiddleware } = require('../middlewares/uploadFile');
-
-const {
-  uploadController: { upload, bulkUpload, getImage },
-} = require('../controllers');
 const { increaseStock, decreaseStock } = require('../controllers/stock.controller');
 
 const router = express.Router();
@@ -21,10 +16,6 @@ router
   .route('/')
   .post(auth('manageUsers'), validate(validateCreateProduct), createProduct)
   .get(auth('getUsers'), validate(validateGetProducts), getProducts);
-
-router.route('/uploads').post(uploadFileMiddleware, upload);
-router.route('/bulk-upload').post(uploadBulkMiddleware, bulkUpload);
-router.route('/uploads/:filename').get(getImage);
 
 router
   .route('/:productId')

@@ -16,6 +16,7 @@ const getImage = catchAsync(async (req, res) => {
 const bulkUpload = catchAsync(async (req, res, next) => {
   await uploadService.bulkUpload(req, res, next);
 });
+
 module.exports = {
   upload,
   bulkUpload,

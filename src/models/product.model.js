@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { toJSON, paginate } = require('./plugins');
-const { Stock } = require('./stock.model');
+const { Stock } = require('./stock.model')
 
 const productSchema = mongoose.Schema({
   name: {
@@ -28,6 +28,7 @@ const productSchema = mongoose.Schema({
 productSchema.plugin(toJSON);
 productSchema.plugin(paginate);
 
+// sync product quantity with stock quantity 
 productSchema.methods.updateQuantity = async function () {
   const productId = this._id;
   const stock = await Stock.findOne({ productId });

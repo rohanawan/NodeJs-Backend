@@ -1,23 +1,12 @@
 const httpStatus = require('http-status');
-const { v4: uuidv4 } = require('uuid');
-const fs = require('fs');
 const csv = require('csv-parser');
-const { Product } = require('../models');
-const { productService } = require('.');
+const fs = require('fs');
 const ApiError = require('../utils/ApiError');
+const { v4: uuidv4 } = require('uuid');
+const { Product } = require('../models');
+const { productService } = require('../services');
+const {validateCSV , validateRequest} = require('../utils/validation');
 
-const validateRequest = (req) => {
-  const { file } = req;
-  if (!file) {
-    throw new ApiError(httpStatus.BAD_REQUEST, '"File" is required fields');
-  }
-};
-
-const validateCSV = (row) => {
-  if (!row.name || !row.description || !row.price || !row.quantity || !row.imageURL) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid CSV format. Something Missing');
-  }
-};
 
 const uploadImage = async (req) => {
   const uuid = uuidv4();
@@ -55,11 +44,12 @@ const bulkUpload = (req, res, next) => {
         // Validate headers
         validateCSV(row);
         // Adding products into array
+        const { name, description, price, quantity } = row;
         const product = {
-          name: row.name,
-          description: row.description,
-          price: Number(row.price),
-          quantity: Number(row.quantity),
+            name,
+            description,
+            price: Number(price),
+            quantity: Number(quantity),
         };
         products.push(product);
       } catch (error) {
